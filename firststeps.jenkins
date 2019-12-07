@@ -24,18 +24,21 @@ pipeline {
         
         
          stage('Gradle Clean and Test') {
-            try {
+       
+      steps {
+        script {
+          try {
+           
                 sh 'sudo docker stop jenkins_pos3 '
                 sh 'sudo docker rm jenkins_pos3'
                 sh 'exit 1' // purposefully throwing this for demonstration
             } catch (err) {
-                currentBuild.result = 'FAILURE' // Set to Failure
-                echo "Gradle Clean and Test failed: ${err.getMessage()}" // Print Error Log Message
-                error "Failed during Gradle Clean and Test... Check Logs" // Throw new error to quit out of pipeline, and give a custom message for final catch block
+                echo err
             }
-        } // end stage('Gradle Clean a
+        } 
         
-        
+      }
+         }
         
 
   
