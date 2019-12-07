@@ -31,7 +31,7 @@ pipeline {
             steps {
                        sh 'sudo docker run --name jenkins_pos3 -it -d -v /tmp/sicom-v2018.10-sumo-pos/:/data/jenkins/sicom-v2018.10-sumo-pos docker.sicom.com/buildbox-pos '
                     
-             
+            }
                   
         }
     }
