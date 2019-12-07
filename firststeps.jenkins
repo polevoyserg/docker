@@ -13,8 +13,8 @@ pipeline {
     stages {
         stage("First step") {
             steps {
-                    sh 'docker login docker.sicom.com -uspolovyi -pGhjuhtcc-123 '
-                    sh 'docker pull docker.sicom.com/buildbox-pos:latest'
+                    sh 'sudo docker login docker.sicom.com -uspolovyi -pGhjuhtcc-123 '
+                    sh 'sudo docker pull docker.sicom.com/buildbox-pos:latest'
                     
                   }
         }
