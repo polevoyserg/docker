@@ -20,18 +20,25 @@ pipeline {
         }
         
         
-
         
-        stage('Run Tests') {
+        
+        
+         stage('Gradle Clean and Test') {
             try {
                 sh 'sudo docker stop jenkins_pos3 '
                 sh 'sudo docker rm jenkins_pos3'
+                sh 'exit 1' // purposefully throwing this for demonstration
             } catch (err) {
-                currentBuild.result = 'FAILURE'
-                echo "Caught err: ${err}"
-                throw err // Should I throw this error? Will it prevent anything? Do I need it? Is it good to have?
+                currentBuild.result = 'FAILURE' // Set to Failure
+                echo "Gradle Clean and Test failed: ${err.getMessage()}" // Print Error Log Message
+                error "Failed during Gradle Clean and Test... Check Logs" // Throw new error to quit out of pipeline, and give a custom message for final catch block
             }
-        }
+        } // end stage('Gradle Clean a
+        
+        
+        
+
+  
         
         
   
