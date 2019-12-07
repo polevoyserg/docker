@@ -19,15 +19,22 @@ pipeline {
                   }
         }
         
-        stage("Docker stop") {
-            steps {
-                    catchError {
-                       sh 'sudo docker stop jenkins_pos3 '
-                       sh 'sudo docker rm jenkins_pos3'
+        
+
+        
+        stage('Run Tests') {
+            try {
+                sh 'sudo docker stop jenkins_pos3 '
+                sh 'sudo docker rm jenkins_pos3'
+            } catch (err) {
+                currentBuild.result = 'FAILURE'
+                echo "Caught err: ${err}"
+                throw err // Should I throw this error? Will it prevent anything? Do I need it? Is it good to have?
             }
-                echo currentBuild.result
-            }   
-            }
+        }
+        
+        
+  
             stage("Docker start") {
             steps {
                        sh 'sudo docker run --name jenkins_pos3 -it -d -v /tmp/sicom-v2018.10-sumo-pos/:/data/jenkins/sicom-v2018.10-sumo-pos docker.sicom.com/buildbox-pos '
