@@ -33,7 +33,10 @@ pipeline {
                 sh 'sudo docker rm jenkins_pos3'
                
             } catch (err) {
-                echo err
+                 if (!err.message.contains('could not revoke vault lease')) {
+      currentBuild.result = 'FAILED'
+      error(err.message)
+    }
             }
         } 
         
