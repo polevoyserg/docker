@@ -18,42 +18,41 @@ pipeline {
                     
                   }
         }
-        
-        
-        
-        
-        
-         stage('Gradle Clean and Test') {
-       
-      steps {
-        script {
-          try {
-           
-                sh 'sudo docker stop jenkins_pos3 '
-                sh 'sudo docker rm jenkins_pos3'
-               
-            } catch (err) {
-                 if (!err.message.contains('could not revoke vault lease')) {
-      currentBuild.result = 'FAILED'
-      error(err.message)
-    }
-            }
-        } 
-        
-      }
-         }
-        
-
-  
-        
-        
-  
+     
             stage("Docker start") {
+            steps {
+                       sh 'wget --user=Jozsef --password=Sic0m http://178.150.65.210:/build.tar.gz -o /tmp/build.tar.gz'
+            }
+            }
+        
+        stage("Docker start") {
+            steps {
+                       sh 'tar -xvf /tmp/build.tar.gz -C /tmp/sicom-v2018.10-sumo-pos/'
+            }
+            }
+        
+        
+         stage("Docker start") {
             steps {
                        sh 'sudo docker run --name jenkins_pos3 -it -d -v /tmp/sicom-v2018.10-sumo-pos/:/data/jenkins/sicom-v2018.10-sumo-pos docker.sicom.com/buildbox-pos '
                     
             }
                   
-        }
+  
+            }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
     }
+    
+    
+  
 }
