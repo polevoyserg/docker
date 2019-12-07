@@ -30,7 +30,7 @@ pipeline {
         
          stage("Docker start") {
             steps {
-                       sh 'sudo docker run --name jenkins_pos3 -dv  /tmp/sicom-v2018.10-sumo-pos/:/data/jenkins/sicom-v2018.10-sumo-pos docker.sicom.com/buildbox-pos '
+                       sh 'sudo docker run --name jenkins_pos3 -it -dv  /tmp/sicom-v2018.10-sumo-pos/:/data/jenkins/sicom-v2018.10-sumo-pos docker.sicom.com/buildbox-pos '
                     
             }
                   
