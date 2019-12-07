@@ -40,7 +40,7 @@ pipeline {
         
         stage("Docker Change Owner") {
             steps {
-                       sh 'sudo docker exec -it jenkins_pos3 chown -R jenkins:jenkins /data/jenkins/sicom-v2018.10-sumo-pos '
+                       sh 'sudo docker exec jenkins_pos3 chown -R jenkins:jenkins /data/jenkins/sicom-v2018.10-sumo-pos '
                     
             }
                   
