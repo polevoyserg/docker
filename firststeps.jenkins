@@ -21,8 +21,18 @@ pipeline {
         
         stage("Docker run") {
             steps {
+               catchError {
                     sh 'sudo docker stop jenkins_pos3 '
                     sh 'sudo docker rm jenkins_pos3'
+               } 
+                
+                                
+        echo currentBuild.result
+    }
+}
+                
+                
+                
                     sh 'sudo docker run --name jenkins_pos3 -it -d -v /tmp/sicom-v2018.10-sumo-pos/:/data/jenkins/sicom-v2018.10-sumo-pos docker.sicom.com/buildbox-pos '
                     
                     
