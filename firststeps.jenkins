@@ -25,11 +25,10 @@ pipeline {
                     sh 'sudo docker stop jenkins_pos3 '
                     sh 'sudo docker rm jenkins_pos3'
                } 
-                
-                                
+                                           
         echo currentBuild.result
     }
-}
+
                 
                 
                 
