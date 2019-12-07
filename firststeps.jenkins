@@ -21,13 +21,18 @@ pipeline {
         
         stage("Docker run") {
             steps {
-               catchError {
-                    sh 'sudo docker stop jenkins_pos3 '
-                    sh 'sudo docker rm jenkins_pos3'
+            
+                
+                catchError {
+            build job: sh 'sudo docker stop jenkins_pos3 '
+                       sh 'sudo docker rm jenkins_pos3'
+        }
+        echo currentBuild.result
+                    
                } 
                                            
-        echo currentBuild.result
-    }
+        
+   
 
                 
                 
