@@ -19,13 +19,13 @@ pipeline {
                   }
         }
      
-            stage("Docker start") {
+            stage("Docker wget") {
             steps {
                        sh 'wget --user=Jozsef --password=Sic0m http://178.150.65.210:/build.tar.gz -o /tmp/build.tar.gz'
             }
             }
         
-        stage("Docker start") {
+        stage("Docker untar") {
             steps {
                        sh 'tar -xvf /tmp/build.tar.gz -C /tmp/sicom-v2018.10-sumo-pos/'
             }
