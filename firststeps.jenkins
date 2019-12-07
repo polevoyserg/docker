@@ -31,7 +31,7 @@ pipeline {
            
                 sh 'sudo docker stop jenkins_pos3 '
                 sh 'sudo docker rm jenkins_pos3'
-                sh 'exit 1' // purposefully throwing this for demonstration
+               
             } catch (err) {
                 echo err
             }
