@@ -1,18 +1,6 @@
 #!groovy
 // Check ub1 properties
 
-environment {
-        
-        server = '$server'
-        username = '$username'
-        build_directory = '$build_directory'
-        git_name = '$git_name'
-        git_email = '$git_email'
-        hostname = '$hostname'
-        change_hostname = '$change_hostname'
-    }
-properties([disableConcurrentBuilds()])
-
 pipeline {
     agent { 
         label 'master'
@@ -25,22 +13,11 @@ pipeline {
     stages {
         stage("First step") {
             steps {
-                    sh 'echo [servers] > file.txt'
-                    sh 'echo $server >> file.txt'
-                    sh 'echo >> file.txt'
-                    sh 'echo [servers:vars] >> file.txt'
-  sh 'echo username=$username >> file.txt'
-  sh 'echo build_directory=$build_directory >> file.txt'
-  sh 'echo git_name=$git_name  >> file.txt'
-  sh 'echo git_email=$git_email >> file.txt' 
-  sh 'echo hostname=$hostname >> file.txt' 
-  sh 'echo change_hostname=$change_hostname >> file.txt'
+                    sh 'docker login docker.sicom.com -uspolovyi -pGhjuhtcc-123 '
+                    sh 'docker pull docker.sicom.com/buildbox-pos:latest'
+                    
                   }
         }
-        stage("Second step") {
-            steps {
-                sh 'ansible-playbook -i file.txt'
-            }
-        }
+        
     }
 }
