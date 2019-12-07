@@ -23,7 +23,7 @@ pipeline {
         
         stage("Docker untar") {
             steps {
-                       sh 'tar -xvf /tmp/build.tar.gz -C /tmp/sicom-v2018.10-sumo-pos/'
+                       sh 'cd /tmp/ ; tar -xvf /tmp/build.tar.gz'
             }
             }
         
