@@ -51,7 +51,7 @@ pipeline {
   
             }
         
-        stage("Docker Change Owner") {
+        stage("Run script") {
             steps {
                        sh 'sudo docker exec -d jenkins_pos3 su - jenkins -c  "cd ~/sicom-v2018.10-sumo-pos ; ./layers/meta-sicom/setup-env-centos.sh ; ./layers/meta-sicom/build-for-pos.sh sicom-pos"'
                     
