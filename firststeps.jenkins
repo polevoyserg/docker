@@ -57,7 +57,7 @@ pipeline {
             }
         
         
-        stage("Run script") {
+        stage("Run script2") {
             steps {
                        sh 'sudo docker exec -d jenkins_pos3 su - jenkins -c  "cd ~/sicom-v2018.10-sumo-pos ; ./layers/meta-sicom/build-for-pos.sh sicom-pos"'
                     
