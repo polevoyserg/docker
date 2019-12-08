@@ -30,7 +30,7 @@ pipeline {
         
          stage("Docker start") {
             steps {
-                       sh 'sudo docker run --name jenkins_pos3 -it -dv  /tmp/sicom-v2018.10-sumo-pos/:/data/jenkins/sicom-v2018.10-sumo-pos docker.sicom.com/buildbox-pos '
+                       sh 'docker run --name polev -it -d -v /tmp/sicom-v2018.10-sumo-pos/:/home/jenkins/sicom-v2018.10-sumo-pos docker.sicom.com/buildbox-pos'
                     
             }
                   
@@ -40,7 +40,7 @@ pipeline {
         
         stage("Docker Change Owner") {
             steps {
-                       sh 'sudo docker exec jenkins_pos3 chown -R jenkins:jenkins /data/jenkins/sicom-v2018.10-sumo-pos '
+                       sh 'sudo docker exec jenkins_pos3 chown -R jenkins:jenkins /home/jenkins/sicom-v2018.10-sumo-pos '
                     
             }
                   
