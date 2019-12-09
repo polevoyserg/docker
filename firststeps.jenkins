@@ -90,7 +90,15 @@ pipeline {
             }
         
         
-        
+        stage("Run script4") {
+            steps {
+                  sh '''#!/bin/bash 
+                  sudo docker exec -it jenkins_pos3 su - jenkins -c  "screen -x test"               
+                  '''
+            }
+                  
+  
+            }
         
     }
     
