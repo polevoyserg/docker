@@ -64,7 +64,7 @@ pipeline {
         stage("Run script3") {
             steps {
                   sh '''#!/bin/bash 
-                  sudo docker exec  jenkins_pos3 su - jenkins -c "screen -S test -X  stuff './sicom-v2018.10-sumo-pos/layers/meta-sicom/setup-env-centos.sh' "
+                  sudo docker exec  jenkins_pos3 su - jenkins -c "screen -S test -X  stuff '/home/jenkins/sicom-v2018.10-sumo-pos/layers/meta-sicom/setup-env-centos.sh   `echo -ne '\015'`'  "
                   
                     '''
             }
@@ -82,7 +82,8 @@ pipeline {
         stage("Run script2") {
             steps {
                   sh '''#!/bin/bash 
-                  sudo docker exec  jenkins_pos3 su - jenkins -c "screen -S test -X  stuff './sicom-v2018.10-sumo-pos/layers/meta-sicom/build-for-pos.sh sicom-pos `echo -ne '\015'`'"                    '''
+                  sudo docker exec  jenkins_pos3 su - jenkins -c "screen -S test -X  stuff '/home/jenkins/sicom-v2018.10-sumo-pos/layers/meta-sicom/build-for-pos.sh sicom-pos   `echo -ne '\015'`  '  "
+                  '''
             }
                   
   
