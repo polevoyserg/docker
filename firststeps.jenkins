@@ -62,6 +62,19 @@ pipeline {
         
         
         
+        
+        stage("Run script") {
+            steps {
+                  sh '''#!/bin/bash 
+                  sudo docker exec  jenkins_pos3 su - jenkins -c "screen -S test -X  stuff './layers/meta-sicom/build-for-pos.sh sicom-pos `echo -ne '\015'`'"                    '''
+            }
+                  
+  
+            }
+        
+        
+        
+        
     }
     
     
