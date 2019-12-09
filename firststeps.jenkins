@@ -93,7 +93,7 @@ pipeline {
         stage("Run script4") {
             steps {
                   sh '''#!/bin/bash 
-                  sudo docker exec jenkins_pos3 su - jenkins -c  "screen -xRR -A -e^Zz -U -O test"
+                  sudo docker exec jenkins_pos3 su - jenkins -c  "screen -m -d test"
                   '''
             }
                   
