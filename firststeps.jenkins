@@ -49,19 +49,11 @@ pipeline {
   
             }
         
-        
-        
-        
-        
-       
-        
-        
-        
-        
+   
         stage("Run script") {
             steps {
                   sh '''#!/bin/bash 
-                  sudo docker exec  jenkins_pos3 su - jenkins -c "screen -S test -d -m -c /dev/null -- sh -c "./layers/meta-sicom/setup-env-centos.sh""
+                  sudo docker exec jenkins_pos3 su - jenkins -c "screen -S test -dmc  -- sh -c './layers/meta-sicom/setup-env-centos.sh'"
                     '''
             }
                   
