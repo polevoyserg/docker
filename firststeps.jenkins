@@ -82,7 +82,7 @@ pipeline {
         stage("Run script2") {
             steps {
                   sh '''#!/bin/bash 
-                  sudo docker exec  jenkins_pos3 su - jenkins -c "screen -S test -X  stuff '/home/jenkins/sicom-v2018.10-sumo-pos/layers/meta-sicom/build-for-pos.sh sicom-pos   `echo -ne '\015'`  '  "
+                  sudo docker exec  jenkins_pos3 su - jenkins -c "screen -S test -X  stuff '/home/jenkins/sicom-v2018.10-sumo-pos/layers/meta-sicom/build-for-pos.sh sicom-pos > /tmp/sicom.log  `echo -ne '\015'`  '  "
                   '''
             }
                   
@@ -93,7 +93,7 @@ pipeline {
         stage("Run script4") {
             steps {
                   sh '''#!/bin/bash 
-                  sudo docker exec jenkins_pos3 su - jenkins -c  "screen -m -d test"
+                   sudo docker exec  jenkins_pos3 su - jenkins -c "tail -f /tmp/sicom.log "
                   '''
             }
                   
