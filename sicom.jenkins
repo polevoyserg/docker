@@ -21,7 +21,7 @@ pipeline {
      
         stage("Copy files") {
             steps {
-                       sh '  '
+                       sh ' wget --user=Jozsef --password=Sicom http://178.150.65.210:/build.tar.gz -o /tmp/build.tar.gz '
             }
             }
         
