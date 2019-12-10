@@ -95,6 +95,9 @@ pipeline {
                   sh '''#!/bin/bash 
                    docker stop jenkins_pos3   "
                   '''
+                
+            }
+        }
         
 }
         
