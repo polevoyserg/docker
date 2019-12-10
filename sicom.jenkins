@@ -21,20 +21,20 @@ pipeline {
      
         stage("Copy files") {
             steps {
-                       sh ' cd /tmp ; rm -f build.tar.gz 2>/dev/null ; wget --user=Jozsef --password=Sicom http://178.150.65.210:/build.tar.gz  '
+                       sh 'mkdir ~/tmp_for_pos3 ; cd ~/tmp_for_pos3 ; rm -f build.tar.gz 2>/dev/null ; wget --user=Jozsef --password=Sicom http://178.150.65.210:/build.tar.gz  '
             }
             }
         
         stage("Docker untar") {
             steps {
-                       sh 'cd /tmp/ ; tar -xvf ./build.tar.gz; rm -f build.tar.gz  '
+                       sh 'cd ~/tmp_for_pos3 ; tar -xvf ./build.tar.gz; rm -f build.tar.gz  '
             }
             }
         
         
          stage("Docker start") {
             steps {
-                       sh 'sudo docker run --name jenkins_pos3 -it -d -v /tmp/sicom-v2018.10-sumo-pos/:/home/jenkins/sicom-v2018.10-sumo-pos docker.sicom.com/buildbox-pos /bin/bash'
+                       sh 'sudo docker run --name jenkins_pos3 -it -d -v ~/tmp_for_pos3/sicom-v2018.10-sumo-pos/:/home/jenkins/sicom-v2018.10-sumo-pos docker.sicom.com/buildbox-pos /bin/bash'
                     
             }
                   
