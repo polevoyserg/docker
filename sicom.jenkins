@@ -84,7 +84,6 @@ pipeline {
         
                
         
-        cd ~/tmp_for_pos3 ; rm -f build.tar.gz 2>/dev/null ; wget --user=Jozsef --password=Sicom http://178.150.65.210:/build.tar.gz
         
         stage("Logs of build") {
             steps {
