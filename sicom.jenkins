@@ -21,7 +21,13 @@ pipeline {
      
         stage("Copy files") {
             steps {
-                       sh 'mkdir ~/tmp_for_pos3 2>/dev/null; cd ~/tmp_for_pos3 ; rm -f build.tar.gz 2>/dev/null ; wget --user=Jozsef --password=Sicom http://178.150.65.210:/build.tar.gz  '
+                     sh '''#!/bin/bash
+                     if ! [ -d ~/tmp_for_pos3 ]; then mkdir ~/tmp_for_pos3 ; fi cd ~/tmp_for_pos3 ; rm -f build.tar.gz 2>/dev/null ; wget --user=Jozsef --password=Sicom http://178.150.65.210:/build.tar.gz
+                               
+                        '''       
+                               
+                               
+                               
             }
             }
         
@@ -78,7 +84,7 @@ pipeline {
         
                
         
-        
+        cd ~/tmp_for_pos3 ; rm -f build.tar.gz 2>/dev/null ; wget --user=Jozsef --password=Sicom http://178.150.65.210:/build.tar.gz
         
         stage("Logs of build") {
             steps {
