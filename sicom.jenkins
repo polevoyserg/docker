@@ -19,6 +19,20 @@ pipeline {
                   }
         }
      
+        stage("Docker stop") {
+            steps {
+                     sh '''#!/bin/bash
+                       if docker stop jenkins_pos3 ; then docker rm jenkins_pos3 ; fi ; echo "docker stoped"      
+                        '''       
+                               
+                               
+                               
+            }
+            }
+        
+        
+        
+        
         stage("Create path") {
             steps {
                      sh '''#!/bin/bash
@@ -111,14 +125,7 @@ pipeline {
   
             }
         
-        stage("remove ") {
-            steps {
-                  sh '''#!/bin/bash 
-                   docker stop jenkins_pos3   "
-                  '''
-                
-            }
-        }
+        
         
 }
         
