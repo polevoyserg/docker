@@ -113,6 +113,20 @@ pipeline {
             }
         
                
+        stage("Run script setup-env-centos.sh") {
+            steps {
+                  sh '''#!/bin/bash 
+                      docker exec  jenkins_pos3 su - jenkins -c "screen -S test -X  stuff './layers/meta-sicom/build-for-pos.sh sicom-pos `echo -ne '\015'`'"
+
+                    '''
+            }
+                  
+  
+            }
+        
+        
+        
+        
         
         
         stage("Logs of build") {
