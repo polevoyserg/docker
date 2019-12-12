@@ -13,24 +13,31 @@ pipeline {
     stages {
         stage("Docker login and docker pull") {
             steps {
-                    sh 'sudo docker login docker.sicom.com -uspolovyi -pGhjuhtcc-123 '
-                    sh 'sudo docker pull docker.sicom.com/buildbox-pos:latest'
+                    sh ' docker login docker.sicom.com -uspolovyi -pGhjuhtcc-123 '
+                    sh ' docker pull docker.sicom.com/buildbox-pos:latest'
                     
                   }
         }
      
-  
-        
-        stage("Docker untar") {
+        stage("Docker stop") {
             steps {
-                       sh 'cd /tmp/ ; tar -xvf /tmp/build.tar.gz'
+                     sh '''#!/bin/bash
+                       if docker stop jenkins_pos3 ; then docker rm jenkins_pos3 ; fi ; echo "docker stoped"      
+                        '''       
+                               
+                               
+                               
             }
             }
         
+        
+        
+        
+      
         
          stage("Docker start") {
             steps {
-                       sh 'sudo docker run --name jenkins_pos3 -it -d -v /tmp/sicom-v2018.10-sumo-pos/:/home/jenkins/sicom-v2018.10-sumo-pos docker.sicom.com/buildbox-pos /bin/bash'
+                       sh 'docker run --name jenkins_pos3 -it -d -v /data/jenkins/tmp_for_pos3/sicom-v2018.10-sumo-pos/:/home/jenkins/sicom-v2018.10-sumo-pos docker.sicom.com/buildbox-pos /bin/bash'
                     
             }
                   
@@ -41,7 +48,7 @@ pipeline {
         stage("Docker Change Owner") {
             steps {
                    sh '''#!/bin/bash
-                   sudo docker exec jenkins_pos3 chown -R jenkins:jenkins /home/jenkins/sicom-v2018.10-sumo-pos 
+                    docker exec jenkins_pos3 chown -R jenkins:jenkins /home/jenkins/sicom-v2018.10-sumo-pos 
                    '''
                     
             }
@@ -50,10 +57,10 @@ pipeline {
             }
         
    
-        stage("Run script") {
+        stage("Create screen session") {
             steps {
                   sh '''#!/bin/bash 
-                  sudo docker exec  jenkins_pos3 su - jenkins -c "screen -S test -d -m -c /dev/null "
+                   docker exec  jenkins_pos3 su - jenkins -c "screen -S test -d -m -c /dev/null "
                   
                     '''
             }
@@ -61,11 +68,23 @@ pipeline {
   
             }
         
-        stage("Run script3") {
+        stage("Run script setup-env-centos.sh") {
             steps {
                   sh '''#!/bin/bash 
-                  sudo docker exec  jenkins_pos3 su - jenkins -c "screen -S test -X  stuff '/home/jenkins/sicom-v2018.10-sumo-pos/layers/meta-sicom/setup-env-centos.sh > /tmp/sicom.log  `echo -ne '\015'`'  "
+                   docker exec  jenkins_pos3 su - jenkins -c "screen -S test -X  stuff '/home/jenkins/sicom-v2018.10-sumo-pos/layers/meta-sicom/setup-env-centos.sh > /tmp/sicom.log  `echo -ne '\015'`'  "
                   
+                    '''
+            }
+                  
+  
+            }
+        
+               
+        stage("Run script for build POS3") {
+            steps {
+                  sh '''#!/bin/bash 
+                    docker exec  jenkins_pos3 su - jenkins -c "screen -S test -X  stuff '/home/jenkins/sicom-v2018.10-sumo-pos/layers/meta-sicom/build-for-pos.sh sicom-pos   `echo -ne '\015'`  '  "
+
                     '''
             }
                   
@@ -77,31 +96,18 @@ pipeline {
         
         
         
-        
-        
-        stage("Run script2") {
+        stage("Logs of build") {
             steps {
                   sh '''#!/bin/bash 
-                  sudo docker exec  jenkins_pos3 su - jenkins -c "screen -S test -X  stuff '/home/jenkins/sicom-v2018.10-sumo-pos/layers/meta-sicom/build-for-pos.sh sicom-pos   `echo -ne '\015'`  '  "
+                    docker exec  jenkins_pos3 su - jenkins -c "tail -f /tmp/sicom.log "
                   '''
             }
-                  
+               
   
             }
         
         
-        stage("Run script4") {
-            steps {
-                  sh '''#!/bin/bash 
-                   sudo docker exec  jenkins_pos3 su - jenkins -c "tail -f /tmp/sicom.log "
-                  '''
-            }
-                  
-  
-            }
         
-    }
-    
-    
-  
+}
+        
 }
