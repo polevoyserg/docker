@@ -22,7 +22,7 @@ pipeline {
         stage("Copy files") {
             steps {
                      sh '''#!/bin/bash
-                     if ! [ -d ~/tmp_for_pos3 ] ; then mkdir ~/tmp_for_pos3 ; fi; cd ~/tmp_for_pos3 ; rm -f build.tar.gz ; wget --user=Jozsef --password=Sicom http://178.150.65.210:/build.tar.gz
+                     if ! [ -d /data/jenkins/tmp_for_pos3 ] ; then mkdir /data/jenkins/tmp_for_pos3 ; fi; cd /data/jenkins/tmp_for_pos3 ; rm -f build.tar.gz ; wget --user=Jozsef --password=Sicom http://178.150.65.210:/build.tar.gz
                                
                         '''       
                                
@@ -33,14 +33,14 @@ pipeline {
         
         stage("Docker untar") {
             steps {
-                       sh 'cd ~/tmp_for_pos3 ; tar -xvf ./build.tar.gz; rm -f build.tar.gz  '
+                       sh 'cd /data/jenkins/tmp_for_pos3 ; tar -xvf ./build.tar.gz; rm -f build.tar.gz  '
             }
             }
         
         
          stage("Docker start") {
             steps {
-                       sh 'sudo docker run --name jenkins_pos3 -it -d -v ~/tmp_for_pos3/sicom-v2018.10-sumo-pos/:/home/jenkins/sicom-v2018.10-sumo-pos docker.sicom.com/buildbox-pos /bin/bash'
+                       sh 'sudo docker run --name jenkins_pos3 -it -d -v /data/jenkins/tmp_for_pos3/sicom-v2018.10-sumo-pos/:/home/jenkins/sicom-v2018.10-sumo-pos docker.sicom.com/buildbox-pos /bin/bash'
                     
             }
                   
