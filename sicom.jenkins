@@ -19,10 +19,10 @@ pipeline {
                   }
         }
      
-        stage("Copy files") {
+        stage("Create path") {
             steps {
                      sh '''#!/bin/bash
-                     if ! [ -d /data/jenkins/tmp_for_pos3 ] ; then mkdir /data/jenkins/tmp_for_pos3 ; fi; cd /data/jenkins/tmp_for_pos3 ; rm -f build.tar.gz ; wget --user=Jozsef --password=Sicom http://178.150.65.210:/build.tar.gz
+                     if ! [ -d /data/jenkins/tmp_for_pos3 ] ; then mkdir /data/jenkins/tmp_for_pos3 ; fi; cd /data/jenkins/tmp_for_pos3 ; rm -f build.tar.gz ; sleep 5 ; pwd 
                                
                         '''       
                                
@@ -30,6 +30,22 @@ pipeline {
                                
             }
             }
+        
+         stage("Copy files") {
+            steps {
+                     sh '''#!/bin/bash
+                     cd /data/jenkins/tmp_for_pos3 ; rm -f build.tar.gz ;  wget --user=Jozsef --password=Sicom http://178.150.65.210:/build.tar.gz
+                               
+                        '''       
+                               
+                               
+                               
+            }
+            }
+        
+        
+        
+        
         
         stage("Docker untar") {
             steps {
