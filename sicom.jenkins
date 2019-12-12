@@ -133,7 +133,7 @@ pipeline {
         stage("Logs of build") {
             steps {
                   sh '''#!/bin/bash 
-                    docker exec  jenkins_pos3 su - jenkins -c "tail -f /tmp/sicom.log |  while read -r line; do  if [[ '$line' == Summary ]]; then exit 0; else tail -n1 /tmp/sicom.log; fi; done"
+                    docker exec  jenkins_pos3 su - jenkins -c "tail -f /tmp/sicom.log |  while read -r line; do  if [[ '$line' == Summary ]]; then exit ; else tail -n1 /tmp/sicom.log; fi; done"
                   '''
             }
                
