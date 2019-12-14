@@ -11,8 +11,7 @@ pipeline {
         timestamps()
     }
     stages {
-        stage("Docker login and docker pull") {
-            
+        
         
         stage("Logs of build") {
             steps {
