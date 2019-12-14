@@ -133,7 +133,7 @@ pipeline {
         stage("Logs of build") {
             steps {
                   sh '''#!/bin/bash 
-               set -o pipefail  ;     tail -f  /home/jenkins/sicom-v2018.10-sumo-pos/sicom.log |  while read -r line; do  if [[ \\\"$line\\\" == Summary ]]; then exit 0 && exit 0   ; else tail -n1 /home/jenkins/sicom-v2018.10-sumo-pos/sicom.log; fi; done
+               set -o pipefail  ;     tail -f /data/jenkins/tmp_for_pos3/sicom-v2018.10-sumo-pos/sicom.log |  while read -r line; do  if [[ \\\"$line\\\" == Summary ]]; then exit 0 && exit 0   ; else tail -n1  /data/jenkins/tmp_for_pos3/sicom-v2018.10-sumo-pos/sicom.log; fi; done
                   '''
             }
                
