@@ -16,7 +16,7 @@ pipeline {
         stage("Run script4") {
             steps {
                   sh '''#!/bin/bash 
-                  tail -f /var/log/syslog |  while read -r line; do  if [[ \\\"$line\\\" == *Summary* ]]; then pkill -9 tail   ; else tail -n1  /var/log/syslo; fi; done
+                  sudo tail -f /var/log/syslog |  while read -r line; do  if [[ \\\"$line\\\" == *Summary* ]]; then sudo pkill -9 tail   ; else sudo tail -n1  /var/log/syslo; fi; done
                   '''
             }
                   
