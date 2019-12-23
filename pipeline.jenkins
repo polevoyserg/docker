@@ -40,7 +40,7 @@ pipeline {
         stage("Create path") {
             steps {
                      sh '''#!/bin/bash
-                     if ! [ -d /data/jenkins/tmp_for_pos3 ] ; then mkdir /data/jenkins/tmp_for_pos3 ; fi; cd /data/jenkins/tmp_for_pos3 ; rm -f build.tar.gz ; rm -rf sicom-v2018.10-sumo-pos ; pwd 
+                     if ! [ -d /data/jenkins/tmp_for_pos3 ] ; then mkdir /data/jenkins/tmp_for_pos3 ; fi; cd /data/jenkins/tmp_for_pos3  ; rm -rf sicom-v2018.10-sumo-pos ; pwd 
                                
                         '''       
                                
@@ -52,7 +52,7 @@ pipeline {
         
         stage("Docker untar") {
             steps {
-                       sh 'cd /data/jenkins/ ; tar -xvf build.tar.gz -C ./tmp_for_pos3  '
+                       sh 'cd /data/jenkins/ ; tar -xvf /data/jenkins/workspace/POS/POS-OS3/build.tar.gz -C ./tmp_for_pos3  '
             }
             }
         
@@ -62,7 +62,6 @@ pipeline {
                        sh 'docker run --name jenkins_pos3 -it -d -v /data/jenkins/tmp_for_pos3/sicom-v2018.10-sumo-pos/:/home/jenkins/sicom-v2018.10-sumo-pos docker.sicom.com/buildbox-pos /bin/bash'
                     
             }
-            
             }
             
          
@@ -74,8 +73,6 @@ pipeline {
                    '''
                     
             }
-                  
-  
             }
         
    
@@ -86,8 +83,6 @@ pipeline {
                   
                     '''
             }
-                  
-  
             }
         
         
@@ -98,8 +93,6 @@ pipeline {
                   
                     '''
             }
-                  
-  
             }
         
         
@@ -111,8 +104,7 @@ pipeline {
 
                     '''
             }
-                  
-  
+              
             }
             
             
@@ -124,33 +116,48 @@ pipeline {
                   '''
                  
             }
-               
-  
             }
             
-     stage("copy file to build directory") {
+     stage("check directory") {
             steps {
                   sh '''#!/bin/bash 
-                  scp -r /data/jenkins/tmp_for_pos3/sicom-v2018.10-sumo-pos/deploy/glibc/ipk/i686/sicom-pos_* /data/jenkins/workspace/POS/Pipeline/
+            cd /data/jenkins/workspace/POS/POS-OS3/; if ! [ -d ./artifacts ]; then mkdir ./artifacts; else  rm -rf ./artifacts/* ; fi  
                   '''
                  
             }
-               
-  
             }
+        
+        
+        stage("copy file to build directory") {
+            steps {
+                  sh '''#!/bin/bash 
+                  scp -r /data/jenkins/tmp_for_pos3/sicom-v2018.10-sumo-pos/sicom.log /data/jenkins/workspace/POS/POS-OS3/artifacts/
+                  '''
+                 
+            }
+            }
+        
         
         stage("Archive Artifacts") {
             steps {
                  
-                archiveArtifacts artifacts: '**/sicom-pos_*'  
+                archiveArtifacts artifacts: '**/artifacts'  
             }
-               
-  
             }
         
         
-       
+       stage("Docker delete") {
+            steps {
+                     sh '''#!/bin/bash
+                       if docker stop jenkins_pos3 ; then docker rm jenkins_pos3 ; fi ; echo "docker stoped"      
+                        '''       
+                               
+                               
+                               
+            }
+            }
             
 
-        }      
+}      
 }
+
